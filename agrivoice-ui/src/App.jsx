@@ -276,6 +276,36 @@ export default function App() {
     );
   };
 
+  // Dynamic Block Builder Device & Sensor Handlers
+  const handleBlockSensorChange = (sensor) => {
+    setBlockSensor(sensor);
+    if (sensor === 'Soil Moisture') {
+      setBlockOperator('<');
+      setBlockThreshold(30);
+      setBlockDevice('Water pump');
+      setBlockAction('ON');
+    } else if (sensor === 'Light') {
+      setBlockOperator('>');
+      setBlockThreshold(30000);
+      setBlockDevice('Shade net');
+      setBlockAction('CLOSE');
+    } else {
+      setBlockOperator('>');
+      setBlockThreshold(28);
+      setBlockDevice('Cooling fan');
+      setBlockAction('ON');
+    }
+  };
+
+  const handleBlockDeviceChange = (device) => {
+    setBlockDevice(device);
+    if (device === 'Shade net') {
+      setBlockAction('CLOSE');
+    } else {
+      setBlockAction('ON');
+    }
+  };
+
   if (!currentUser) {
     return (
       <div className="min-h-screen bg-slate-950 text-slate-100 flex items-center justify-center p-4">
@@ -450,15 +480,16 @@ export default function App() {
                     <button onClick={startVoiceInput} className={`p-3 rounded-xl border ${isListening ? 'bg-rose-600 border-rose-400 animate-pulse' : 'bg-slate-800 border-slate-700'}`}>
                       {isListening ? <MicOff className="w-5 h-5" /> : <Mic className="w-5 h-5 text-emerald-400" />}
                     </button>
-                    <input type="text" value={commandInput} onChange={(e) => setCommandInput(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && handleNaturalCommand(commandInput)} placeholder='e.g., "Soil moisture 35 adu nam water pump danna"' className="flex-1 bg-slate-950 border border-slate-700 rounded-xl px-4 text-sm" />
+                    <input type="text" value={commandInput} onChange={(e) => setCommandInput(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && handleNaturalCommand(commandInput)} placeholder='e.g., "Soil moisture 30 adu nam water pump danna"' className="flex-1 bg-slate-950 border border-slate-700 rounded-xl px-4 text-sm" />
                     <button onClick={() => handleNaturalCommand(commandInput)} className="bg-emerald-600 hover:bg-emerald-500 px-4 rounded-xl font-semibold text-sm flex items-center gap-1.5">
                       <Send className="w-4 h-4" /> Save
                     </button>
                   </div>
 
+                  {/* SMART CONTEXT-AWARE BLOCK BUILDER */}
                   <div className="mt-4 pt-4 border-t border-slate-800 flex flex-wrap items-center gap-2 bg-slate-950 p-3 rounded-xl">
                     <span className="text-xs font-bold text-emerald-400">WHEN</span>
-                    <select value={blockSensor} onChange={(e) => setBlockSensor(e.target.value)} className="bg-slate-800 text-xs rounded-lg px-2.5 py-1.5">
+                    <select value={blockSensor} onChange={(e) => handleBlockSensorChange(e.target.value)} className="bg-slate-800 text-xs rounded-lg px-2.5 py-1.5">
                       <option value="Temperature">Temperature</option>
                       <option value="Light">Light</option>
                       <option value="Soil Moisture">Soil Moisture</option>
@@ -469,16 +500,23 @@ export default function App() {
                     </select>
                     <input type="number" value={blockThreshold} onChange={(e) => setBlockThreshold(e.target.value)} className="w-20 bg-slate-800 text-xs rounded-lg px-2.5 py-1.5" />
                     <span className="text-xs font-bold text-cyan-400">THEN</span>
-                    <select value={blockDevice} onChange={(e) => setBlockDevice(e.target.value)} className="bg-slate-800 text-xs rounded-lg px-2.5 py-1.5">
+                    <select value={blockDevice} onChange={(e) => handleBlockDeviceChange(e.target.value)} className="bg-slate-800 text-xs rounded-lg px-2.5 py-1.5">
                       <option value="Cooling fan">Cooling fan</option>
                       <option value="Water pump">Water pump</option>
                       <option value="Shade net">Shade net</option>
                     </select>
                     <select value={blockAction} onChange={(e) => setBlockAction(e.target.value)} className="bg-slate-800 text-xs rounded-lg px-2.5 py-1.5">
-                      <option value="ON">ON</option>
-                      <option value="OFF">OFF</option>
-                      <option value="CLOSE">CLOSE</option>
-                      <option value="OPEN">OPEN</option>
+                      {blockDevice === 'Shade net' ? (
+                        <>
+                          <option value="CLOSE">CLOSE</option>
+                          <option value="OPEN">OPEN</option>
+                        </>
+                      ) : (
+                        <>
+                          <option value="ON">ON</option>
+                          <option value="OFF">OFF</option>
+                        </>
+                      )}
                     </select>
                     <button onClick={() => saveRuleToDb({
                       source: 'Block Rule',
@@ -533,7 +571,6 @@ export default function App() {
                     </div>
                   ) : (
                     <>
-                      {/* DYNAMIC SENSOR CARDS (ONLY SHOWS WIRED SENSORS) */}
                       <div className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">
                         Auto-Detected Sensors ({hwStatus.detected_sensors.length})
                       </div>
@@ -562,7 +599,6 @@ export default function App() {
                         </div>
                       )}
 
-                      {/* DYNAMIC RELAYS & ACTUATORS */}
                       <div className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">
                         Auto-Detected Relays & Actuators ({hwStatus.detected_actuators.length})
                       </div>
@@ -594,7 +630,6 @@ export default function App() {
                   )}
                 </div>
 
-                {/* MODBUS LOGS */}
                 <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5">
                   <div className="flex items-center justify-between mb-2">
                     <h2 className="font-bold text-sm flex items-center gap-2">
