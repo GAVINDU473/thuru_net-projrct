@@ -7,9 +7,9 @@ import hashlib
 import joblib
 import pandas as pd
 import requests
-from datetime import datetime
+from pymodbus.client import ModbusTcpClient
 
-app = FastAPI(title="AgriVoice Production SDN & AI Server")
+app = FastAPI(title="AgriVoice Real-Time Industrial PLC & AI Server")
 
 app.add_middleware(
     CORSMiddleware,
@@ -76,7 +76,6 @@ def init_db():
             qos TEXT NOT NULL
         )
     """)
-    # Create default owner account if not exists
     cur.execute("SELECT * FROM users WHERE username = 'gavindu'")
     if not cur.fetchone():
         cur.execute(
@@ -88,7 +87,6 @@ def init_db():
 
 init_db()
 
-# --- PYDANTIC SCHEMAS ---
 class AuthRequest(BaseModel):
     username: str
     password: str
@@ -121,6 +119,11 @@ class CropSyncRequest(BaseModel):
     country: str
     growth_day: int
 
+class ManualRelayRequest(BaseModel):
+    fan_on: Optional[bool] = None
+    pump_on: Optional[bool] = None
+    shade_closed: Optional[bool] = None
+
 def fetch_live_ambient_temp(country: str) -> float:
     lat, lon = COUNTRY_COORDS.get(country, (7.8731, 80.7718))
     try:
@@ -130,7 +133,96 @@ def fetch_live_ambient_temp(country: str) -> float:
     except Exception:
         return 29.0
 
-# --- AUTH ENDPOINTS ---
+def poll_and_control_plc(gh_id: int):
+    conn = get_db()
+    gh = conn.execute("SELECT * FROM greenhouses WHERE id = ?", (gh_id,)).fetchone()
+    if not gh:
+        conn.close()
+        raise HTTPException(status_code=404, detail="Greenhouse not found")
+    rules = [dict(r) for r in conn.execute("SELECT * FROM rules WHERE greenhouse_id = ?", (gh_id,)).fetchall()]
+    conn.close()
+
+    plc_ip = gh["plc_ip"].strip()
+    client = ModbusTcpClient(plc_ip, port=502, timeout=1.2)
+    if not client.connect():
+        return {
+            "online": False,
+            "plc_ip": plc_ip,
+            "message": f"ESP32 Micro-PLC at {plc_ip}:502 is offline. Connect power & network to auto-detect wired sensors.",
+            "detected_sensors": [],
+            "detected_actuators": [],
+            "actuators_state": {"fan_on": False, "pump_on": False, "shade_closed": False}
+        }
+
+    try:
+        rr = client.read_input_registers(address=0, count=4)
+        if rr.isError():
+            raise Exception("Modbus Register Read Error")
+
+        raw_temp, raw_light, raw_soil, hw_mask = rr.registers
+
+        # Build Dynamic List of ONLY Physically Wired Sensors
+        detected_sensors = []
+        sensor_values = {}
+
+        if (hw_mask & 1) and raw_temp != -999:
+            val = round(raw_temp / 10.0, 1)
+            sensor_values["Temperature"] = val
+            detected_sensors.append({"key": "Temperature", "name": "DS18B20 Temp Probe", "pin": "X0 (GPIO 4)", "value": val, "unit": "°C"})
+
+        if (hw_mask & 2) and raw_light >= 0:
+            val = int(raw_light)
+            sensor_values["Light"] = val
+            detected_sensors.append({"key": "Light", "name": "LDR Light Sensor", "pin": "AI0 (GPIO 34)", "value": val, "unit": "Lux"})
+
+        if (hw_mask & 4) and raw_soil >= 0:
+            val = int(raw_soil)
+            sensor_values["Soil Moisture"] = val
+            detected_sensors.append({"key": "Soil Moisture", "name": "Soil Moisture Probe", "pin": "AI1 (GPIO 35)", "value": val, "unit": "%"})
+
+        # Build Dynamic List of Auto-Detected Relays / Actuators
+        detected_actuators = []
+        if hw_mask & 8:
+            detected_actuators.append({"key": "fan", "name": "Cooling Fan Relay", "coil": "Coil Y0 (GPIO 26)"})
+        if hw_mask & 16:
+            detected_actuators.append({"key": "pump", "name": "Water Pump / Mist Relay", "coil": "Coil Y1 (GPIO 33)"})
+        if hw_mask & 32:
+            detected_actuators.append({"key": "shade", "name": "Shade Net Servo", "coil": "HReg Y3 (GPIO 27)"})
+
+        # Evaluate Rules against Auto-Detected Sensors
+        for r in rules:
+            s_val = sensor_values.get(r["sensor"])
+            if s_val is not None:
+                triggered = (s_val > r["threshold"]) if r["operator"] == ">" else (s_val < r["threshold"])
+                if triggered:
+                    if r["device"] == "Cooling fan":
+                        client.write_coil(address=0, value=(r["action"] == "ON"))
+                    elif r["device"] == "Water pump":
+                        client.write_coil(address=1, value=(r["action"] == "ON"))
+                    elif r["device"] == "Shade net":
+                        client.write_register(address=0, value=90 if r["action"] == "CLOSE" else 0)
+
+        coils = client.read_coils(address=0, count=2)
+        hreg = client.read_holding_registers(address=0, count=1)
+        fan_on = bool(coils.bits[0]) if not coils.isError() else False
+        pump_on = bool(coils.bits[1]) if not coils.isError() else False
+        shade_closed = (hreg.registers[0] > 45) if not hreg.isError() else False
+
+        return {
+            "online": True,
+            "plc_ip": plc_ip,
+            "message": f"Auto-detected {len(detected_sensors)} sensor(s) and {len(detected_actuators)} actuator channel(s).",
+            "detected_sensors": detected_sensors,
+            "detected_actuators": detected_actuators,
+            "actuators_state": {
+                "fan_on": fan_on,
+                "pump_on": pump_on,
+                "shade_closed": shade_closed
+            }
+        }
+    finally:
+        client.close()
+
 @app.post("/api/auth/register")
 def register(req: AuthRequest):
     conn = get_db()
@@ -158,7 +250,6 @@ def login(req: AuthRequest):
         raise HTTPException(status_code=401, detail="Invalid username or password")
     return {"status": "ok", "username": user["username"], "full_name": user["full_name"]}
 
-# --- GREENHOUSE & AI ENDPOINTS ---
 @app.get("/api/greenhouses/{owner_username}")
 def get_user_greenhouses(owner_username: str):
     conn = get_db()
@@ -166,11 +257,35 @@ def get_user_greenhouses(owner_username: str):
     result = []
     for gh in ghs:
         gh_dict = dict(gh)
-        rules = conn.execute("SELECT * FROM rules WHERE greenhouse_id = ?", (gh["id"],)).fetchall()
-        gh_dict["rules"] = [dict(r) for r in rules]
+        gh_dict["rules"] = [dict(r) for r in conn.execute("SELECT * FROM rules WHERE greenhouse_id = ?", (gh["id"],)).fetchall()]
         result.append(gh_dict)
     conn.close()
     return result
+
+@app.get("/api/hardware/live/{gh_id}")
+def get_live_hardware(gh_id: int):
+    return poll_and_control_plc(gh_id)
+
+@app.post("/api/hardware/manual/{gh_id}")
+def manual_relay_override(gh_id: int, req: ManualRelayRequest):
+    conn = get_db()
+    gh = conn.execute("SELECT * FROM greenhouses WHERE id = ?", (gh_id,)).fetchone()
+    conn.close()
+    if not gh:
+        raise HTTPException(status_code=404, detail="Greenhouse not found")
+    client = ModbusTcpClient(gh["plc_ip"].strip(), port=502, timeout=1.5)
+    if not client.connect():
+        raise HTTPException(status_code=503, detail=f"Cannot reach PLC at {gh['plc_ip']}")
+    try:
+        if req.fan_on is not None:
+            client.write_coil(address=0, value=req.fan_on)
+        if req.pump_on is not None:
+            client.write_coil(address=1, value=req.pump_on)
+        if req.shade_closed is not None:
+            client.write_register(address=0, value=90 if req.shade_closed else 0)
+        return poll_and_control_plc(gh_id)
+    finally:
+        client.close()
 
 @app.post("/api/greenhouses")
 def create_greenhouse(req: GreenhouseCreate):
@@ -214,7 +329,6 @@ def sync_ai_profile(req: CropSyncRequest):
         "UPDATE greenhouses SET crop = ?, country = ?, growth_day = ?, daily_summary = ? WHERE id = ?",
         (req.crop, req.country, req.growth_day, summary, req.greenhouse_id)
     )
-    # Replace old AI Auto-Rules while keeping user custom rules
     conn.execute("DELETE FROM rules WHERE greenhouse_id = ? AND source = 'AI Auto-Rule'", (req.greenhouse_id,))
     conn.execute(
         "INSERT INTO rules (greenhouse_id, source, sensor, operator, threshold, unit, device, action, qos) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",

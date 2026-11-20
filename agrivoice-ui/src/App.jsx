@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {
   Mic, MicOff, Send, Plus, Cpu, Wifi, WifiOff, Thermometer, Sun,
-  Activity, RefreshCw, CheckCircle2, Layers, Sprout, Terminal,
+  Droplets, RefreshCw, CheckCircle2, Layers, Sprout, Terminal,
   Server, Trash2, Lock, User, LogOut, ShieldCheck, Power, AlertCircle
 } from 'lucide-react';
 
@@ -9,8 +9,12 @@ const API_BASE = 'http://127.0.0.1:8000';
 
 export default function App() {
   const [currentUser, setCurrentUser] = useState(() => {
-    const saved = localStorage.getItem('agrivoice_user');
-    return saved ? JSON.parse(saved) : null;
+    try {
+      const saved = localStorage.getItem('agrivoice_user');
+      return saved ? JSON.parse(saved) : null;
+    } catch {
+      return null;
+    }
   });
   const [authMode, setAuthMode] = useState('login');
   const [authForm, setAuthForm] = useState({ username: '', password: '', full_name: '' });
@@ -22,25 +26,14 @@ export default function App() {
   const [loadingFleet, setLoadingFleet] = useState(false);
   const [aiLoading, setAiLoading] = useState(false);
 
-  // Real Hardware Auto-Detection & Live Modbus State
   const [hwStatus, setHwStatus] = useState({
     online: false,
     message: 'Scanning Modbus TCP network...',
-    detected_equipment: {
-      temp_sensor: false,
-      light_sensor: false,
-      cooling_fan_relay: false,
-      shade_net_servo: false
-    },
-    telemetry: {
-      temp: null,
-      light: null,
-      fan_on: false,
-      shade_closed: false
-    }
+    detected_sensors: [],
+    detected_actuators: [],
+    actuators_state: { fan_on: false, pump_on: false, shade_closed: false }
   });
 
-  // Add Greenhouse Modal
   const [showAddModal, setShowAddModal] = useState(false);
   const [newGh, setNewGh] = useState({
     name: '',
@@ -52,7 +45,6 @@ export default function App() {
     growth_day: 1
   });
 
-  // Tri-Modal Rule Builder
   const [commandInput, setCommandInput] = useState('');
   const [isListening, setIsListening] = useState(false);
   const [blockSensor, setBlockSensor] = useState('Temperature');
@@ -75,30 +67,37 @@ export default function App() {
     try {
       const res = await fetch(`${API_BASE}/api/greenhouses/${username}`);
       const data = await res.json();
-      setGreenhouses(data);
-      if (data.length > 0 && !selectedId) {
+      setGreenhouses(Array.isArray(data) ? data : []);
+      if (Array.isArray(data) && data.length > 0 && !selectedId) {
         setSelectedId(data[0].id);
       }
+    } catch {
+      addLog('ERROR -> Cannot connect to FastAPI Backend (127.0.0.1:8000)');
     } finally {
       setLoadingFleet(false);
     }
   };
 
   useEffect(() => {
-    if (currentUser) loadUserGreenhouses(currentUser.username);
+    if (currentUser?.username) loadUserGreenhouses(currentUser.username);
   }, [currentUser]);
 
   const activeGh = greenhouses.find(g => g.id === selectedId) || greenhouses[0] || null;
 
-  // Poll REAL Hardware ESP32 PLC every 2.5 seconds (Zero Simulation!)
   const pollRealHardware = async (ghId) => {
     if (!ghId) return;
     try {
       const res = await fetch(`${API_BASE}/api/hardware/live/${ghId}`);
       const data = await res.json();
-      setHwStatus(data);
+      setHwStatus({
+        online: Boolean(data.online),
+        message: data.message || '',
+        detected_sensors: Array.isArray(data.detected_sensors) ? data.detected_sensors : [],
+        detected_actuators: Array.isArray(data.detected_actuators) ? data.detected_actuators : [],
+        actuators_state: data.actuators_state || { fan_on: false, pump_on: false, shade_closed: false }
+      });
       if (data.online) {
-        addLog(`MODBUS POLL -> ${data.plc_ip} | Temp:${data.telemetry.temp ?? 'N/A'}°C | Lux:${data.telemetry.light ?? 'N/A'} | Fan:${data.telemetry.fan_on ? 'ON' : 'OFF'}`);
+        addLog(`MODBUS AUTO-SCAN -> ${data.plc_ip} | ${data.detected_sensors?.length || 0} Sensors Active`);
       }
     } catch {
       setHwStatus(prev => ({ ...prev, online: false, message: 'FastAPI Server unreachable' }));
@@ -112,10 +111,13 @@ export default function App() {
     return () => clearInterval(interval);
   }, [activeGh?.id]);
 
-  // Manual Relay Toggle on Physical ESP32
   const togglePhysicalRelay = async (device, nextVal) => {
     if (!activeGh || !hwStatus.online) return;
-    const payload = device === 'fan' ? { fan_on: nextVal } : { shade_closed: nextVal };
+    const payload =
+      device === 'fan' ? { fan_on: nextVal } :
+      device === 'pump' ? { pump_on: nextVal } :
+      { shade_closed: nextVal };
+
     const res = await fetch(`${API_BASE}/api/hardware/manual/${activeGh.id}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -124,7 +126,7 @@ export default function App() {
     if (res.ok) {
       const updated = await res.json();
       setHwStatus(updated);
-      addLog(`MANUAL OVERRIDE -> ${activeGh.plc_ip} | ${device.toUpperCase()} set to ${nextVal ? 'ON/CLOSED' : 'OFF/OPEN'}`);
+      addLog(`RELAY SWITCH -> ${activeGh.plc_ip} | ${device.toUpperCase()} set to ${nextVal ? 'ON/CLOSED' : 'OFF/OPEN'}`);
     }
   };
 
@@ -219,9 +221,9 @@ export default function App() {
     });
     const savedRule = await res.json();
     setGreenhouses(prev =>
-      prev.map(g => (g.id === activeGh.id ? { ...g, rules: [...g.rules, savedRule] } : g))
+      prev.map(g => (g.id === activeGh.id ? { ...g, rules: [...(g.rules || []), savedRule] } : g))
     );
-    addLog(`RULE-DEPLOYED -> ${savedRule.device} ${savedRule.action} when ${savedRule.sensor} ${savedRule.operator} ${savedRule.threshold}${savedRule.unit}`);
+    addLog(`RULE-SAVED -> ${savedRule.device} ${savedRule.action} when ${savedRule.sensor} ${savedRule.operator} ${savedRule.threshold}${savedRule.unit}`);
   };
 
   const handleNaturalCommand = (text) => {
@@ -230,16 +232,18 @@ export default function App() {
     const lower = cmd.toLowerCase();
     const numMatch = lower.match(/(\d+(\.\d+)?)/);
     const numVal = numMatch ? parseFloat(numMatch[1]) : 29.0;
+
+    const isSoil = lower.includes('soil') || lower.includes('wathura') || lower.includes('moisture') || lower.includes('pump');
     const isLight = lower.includes('light') || lower.includes('eliya') || lower.includes('sun');
     const isShade = lower.includes('net') || lower.includes('shade') || lower.includes('dala');
 
     saveRuleToDb({
       source: 'Voice/Text Rule',
-      sensor: isLight ? 'Light' : 'Temperature',
+      sensor: isSoil ? 'Soil Moisture' : (isLight ? 'Light' : 'Temperature'),
       operator: lower.includes('adu') || lower.includes('low') || lower.includes('<') ? '<' : '>',
-      threshold: isLight ? (numVal > 100 ? numVal : 35000) : numVal,
-      unit: isLight ? 'Lux' : '°C',
-      device: isShade ? 'Shade net' : 'Cooling fan',
+      threshold: isSoil ? (numVal <= 100 ? numVal : 35) : (isLight ? (numVal > 100 ? numVal : 35000) : numVal),
+      unit: isSoil ? '%' : (isLight ? 'Lux' : '°C'),
+      device: isSoil ? 'Water pump' : (isShade ? 'Shade net' : 'Cooling fan'),
       action: lower.includes('off') || lower.includes('wahanna') || lower.includes('close')
         ? (isShade ? 'CLOSE' : 'OFF')
         : (isShade ? 'OPEN' : 'ON'),
@@ -268,11 +272,10 @@ export default function App() {
   const handleDeleteRule = async (ruleId) => {
     await fetch(`${API_BASE}/api/rules/${ruleId}`, { method: 'DELETE' });
     setGreenhouses(prev =>
-      prev.map(g => (g.id === activeGh.id ? { ...g, rules: g.rules.filter(r => r.id !== ruleId) } : g))
+      prev.map(g => (g.id === activeGh.id ? { ...g, rules: (g.rules || []).filter(r => r.id !== ruleId) } : g))
     );
   };
 
-  // LOGIN / REGISTER SCREEN
   if (!currentUser) {
     return (
       <div className="min-h-screen bg-slate-950 text-slate-100 flex items-center justify-center p-4">
@@ -329,7 +332,7 @@ export default function App() {
         <div>
           <div className="flex items-center gap-2.5">
             <span className="px-2.5 py-1 text-xs font-bold uppercase bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 rounded-full">
-              Real Hardware Mode • Zero Simulation
+              Plug & Play Auto-Discovery • Zero Demo Data
             </span>
             <span className="text-xs text-slate-400">Operator: <strong className="text-slate-200">{currentUser.full_name}</strong></span>
           </div>
@@ -352,14 +355,13 @@ export default function App() {
         <div className="max-w-xl mx-auto mt-16 bg-slate-900 border border-slate-800 rounded-3xl p-8 text-center">
           <Sprout className="w-10 h-10 text-emerald-400 mx-auto mb-3" />
           <h2 className="text-xl font-bold">No Physical Greenhouses Registered</h2>
-          <p className="text-sm text-slate-400 mt-2">Add your greenhouse and enter your ESP32 Micro-PLC IP address to auto-detect wired sensors and relays.</p>
+          <p className="text-sm text-slate-400 mt-2">Add your greenhouse and link your ESP32 Micro-PLC IP to auto-detect wired sensors and relays.</p>
           <button onClick={() => setShowAddModal(true)} className="mt-6 inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-6 py-3 rounded-xl">
             <Plus className="w-5 h-5" /> Add Your First Greenhouse
           </button>
         </div>
       ) : (
         <>
-          {/* FLEET NODES */}
           <section className="max-w-7xl mx-auto mt-6">
             <h2 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 flex items-center gap-2">
               <Layers className="w-4 h-4 text-emerald-400" /> Registered Greenhouse Nodes ({greenhouses.length})
@@ -380,9 +382,7 @@ export default function App() {
                         <h3 className="font-bold text-slate-100">{gh.name}</h3>
                         <p className="text-xs text-slate-400 mt-0.5">{gh.location} • PLC: {gh.plc_ip}</p>
                       </div>
-                      <span className="text-[11px] px-2 py-0.5 rounded font-mono bg-slate-800 text-cyan-300">
-                        ID:{gh.slave_id}
-                      </span>
+                      <span className="text-[11px] px-2 py-0.5 rounded font-mono bg-slate-800 text-cyan-300">ID:{gh.slave_id}</span>
                     </div>
                     <button onClick={(e) => handleDeleteGreenhouse(gh.id, e)} className="absolute top-3.5 right-3 text-slate-600 hover:text-rose-400 opacity-0 group-hover:opacity-100">
                       <Trash2 className="w-4 h-4" />
@@ -400,7 +400,7 @@ export default function App() {
 
           {activeGh && (
             <main className="max-w-7xl mx-auto mt-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
-              {/* LEFT 7 COLS: AI & RULES */}
+              {/* LEFT 7 COLS */}
               <div className="lg:col-span-7 space-y-6">
                 <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5">
                   <div className="flex items-center justify-between pb-4 border-b border-slate-800">
@@ -441,16 +441,16 @@ export default function App() {
                   </div>
                 </div>
 
-                {/* TRI-MODAL RULES */}
+                {/* AUTOMATION RULES */}
                 <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5">
-                  <h2 className="font-bold text-lg mb-1">Automation Rules (Auto-Executes Physical Relays)</h2>
-                  <p className="text-xs text-slate-400 mb-4">Evaluated continuously against live sensor values read from {activeGh.plc_ip}.</p>
+                  <h2 className="font-bold text-lg mb-1">Automation Rules (Voice, Text, or Block Builder)</h2>
+                  <p className="text-xs text-slate-400 mb-4">Automatically triggers wired relays when auto-detected sensors cross thresholds.</p>
 
                   <div className="flex gap-2">
                     <button onClick={startVoiceInput} className={`p-3 rounded-xl border ${isListening ? 'bg-rose-600 border-rose-400 animate-pulse' : 'bg-slate-800 border-slate-700'}`}>
                       {isListening ? <MicOff className="w-5 h-5" /> : <Mic className="w-5 h-5 text-emerald-400" />}
                     </button>
-                    <input type="text" value={commandInput} onChange={(e) => setCommandInput(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && handleNaturalCommand(commandInput)} placeholder='e.g., "Rasne 29 wadi nam fan eka danna"' className="flex-1 bg-slate-950 border border-slate-700 rounded-xl px-4 text-sm" />
+                    <input type="text" value={commandInput} onChange={(e) => setCommandInput(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && handleNaturalCommand(commandInput)} placeholder='e.g., "Soil moisture 35 adu nam water pump danna"' className="flex-1 bg-slate-950 border border-slate-700 rounded-xl px-4 text-sm" />
                     <button onClick={() => handleNaturalCommand(commandInput)} className="bg-emerald-600 hover:bg-emerald-500 px-4 rounded-xl font-semibold text-sm flex items-center gap-1.5">
                       <Send className="w-4 h-4" /> Save
                     </button>
@@ -461,6 +461,7 @@ export default function App() {
                     <select value={blockSensor} onChange={(e) => setBlockSensor(e.target.value)} className="bg-slate-800 text-xs rounded-lg px-2.5 py-1.5">
                       <option value="Temperature">Temperature</option>
                       <option value="Light">Light</option>
+                      <option value="Soil Moisture">Soil Moisture</option>
                     </select>
                     <select value={blockOperator} onChange={(e) => setBlockOperator(e.target.value)} className="bg-slate-800 text-xs rounded-lg px-2.5 py-1.5">
                       <option value=">">&gt;</option>
@@ -470,6 +471,7 @@ export default function App() {
                     <span className="text-xs font-bold text-cyan-400">THEN</span>
                     <select value={blockDevice} onChange={(e) => setBlockDevice(e.target.value)} className="bg-slate-800 text-xs rounded-lg px-2.5 py-1.5">
                       <option value="Cooling fan">Cooling fan</option>
+                      <option value="Water pump">Water pump</option>
                       <option value="Shade net">Shade net</option>
                     </select>
                     <select value={blockAction} onChange={(e) => setBlockAction(e.target.value)} className="bg-slate-800 text-xs rounded-lg px-2.5 py-1.5">
@@ -478,7 +480,16 @@ export default function App() {
                       <option value="CLOSE">CLOSE</option>
                       <option value="OPEN">OPEN</option>
                     </select>
-                    <button onClick={() => saveRuleToDb({ source: 'Block Rule', sensor: blockSensor, operator: blockOperator, threshold: Number(blockThreshold), unit: blockSensor === 'Temperature' ? '°C' : 'Lux', device: blockDevice, action: blockAction, qos: 'HIGH' })} className="ml-auto bg-teal-600 hover:bg-teal-500 text-xs font-bold px-3 py-1.5 rounded-lg">
+                    <button onClick={() => saveRuleToDb({
+                      source: 'Block Rule',
+                      sensor: blockSensor,
+                      operator: blockOperator,
+                      threshold: Number(blockThreshold),
+                      unit: blockSensor === 'Temperature' ? '°C' : (blockSensor === 'Soil Moisture' ? '%' : 'Lux'),
+                      device: blockDevice,
+                      action: blockAction,
+                      qos: 'HIGH'
+                    })} className="ml-auto bg-teal-600 hover:bg-teal-500 text-xs font-bold px-3 py-1.5 rounded-lg">
                       + Add Rule
                     </button>
                   </div>
@@ -497,12 +508,12 @@ export default function App() {
                 </div>
               </div>
 
-              {/* RIGHT 5 COLS: REAL AUTO-DETECTED HARDWARE & LIVE RELAY CONTROL */}
+              {/* RIGHT 5 COLS: DYNAMIC PLUG & PLAY AUTO-DISCOVERY */}
               <div className="lg:col-span-5 space-y-6">
                 <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5">
                   <div className="flex items-center justify-between mb-3">
                     <h2 className="font-bold text-lg flex items-center gap-2">
-                      <Server className="w-5 h-5 text-emerald-400" /> Auto-Detected PLC Hardware
+                      <Server className="w-5 h-5 text-emerald-400" /> Auto-Detected Hardware I/O
                     </h2>
                     <span className={`px-2.5 py-1 rounded-full text-xs font-bold flex items-center gap-1.5 ${
                       hwStatus.online ? 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/40' : 'bg-rose-500/15 text-rose-400 border border-rose-500/40'
@@ -512,89 +523,78 @@ export default function App() {
                     </span>
                   </div>
 
-                  {!hwStatus.online && (
-                    <div className="p-3 rounded-xl bg-rose-950/30 border border-rose-800/50 text-xs text-rose-300 flex items-start gap-2 mb-4">
+                  {!hwStatus.online ? (
+                    <div className="p-4 rounded-xl bg-rose-950/30 border border-rose-800/50 text-xs text-rose-300 flex items-start gap-2.5">
                       <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
-                      <span>{hwStatus.message}</span>
+                      <div>
+                        <div className="font-bold">Waiting for ESP32 Micro-PLC ({activeGh.plc_ip})</div>
+                        <p className="mt-1 text-rose-200/80">{hwStatus.message}</p>
+                      </div>
                     </div>
+                  ) : (
+                    <>
+                      {/* DYNAMIC SENSOR CARDS (ONLY SHOWS WIRED SENSORS) */}
+                      <div className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">
+                        Auto-Detected Sensors ({hwStatus.detected_sensors.length})
+                      </div>
+                      {hwStatus.detected_sensors.length === 0 ? (
+                        <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 text-xs text-slate-400 mb-4">
+                          PLC Online, but no physical sensors detected on terminals X0, AI0, or AI1 yet. Connect a sensor to auto-appear here.
+                        </div>
+                      ) : (
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
+                          {hwStatus.detected_sensors.map(s => (
+                            <div key={s.key} className="bg-slate-950 border border-emerald-500/30 rounded-xl p-3.5">
+                              <div className="flex items-center justify-between text-xs text-slate-400">
+                                <span className="flex items-center gap-1.5 font-semibold text-slate-200">
+                                  {s.key === 'Temperature' && <Thermometer className="w-3.5 h-3.5 text-amber-400" />}
+                                  {s.key === 'Light' && <Sun className="w-3.5 h-3.5 text-yellow-400" />}
+                                  {s.key === 'Soil Moisture' && <Droplets className="w-3.5 h-3.5 text-cyan-400" />}
+                                  {s.name}
+                                </span>
+                              </div>
+                              <div className="text-2xl font-bold text-emerald-400 mt-1.5">
+                                {s.value} <span className="text-sm font-normal text-slate-400">{s.unit}</span>
+                              </div>
+                              <div className="text-[10px] text-slate-500 mt-1 font-mono">{s.pin} • AUTO-DETECTED</div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+
+                      {/* DYNAMIC RELAYS & ACTUATORS */}
+                      <div className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">
+                        Auto-Detected Relays & Actuators ({hwStatus.detected_actuators.length})
+                      </div>
+                      <div className="space-y-2.5">
+                        {hwStatus.detected_actuators.map(act => {
+                          const isOn =
+                            act.key === 'fan' ? hwStatus.actuators_state?.fan_on :
+                            act.key === 'pump' ? hwStatus.actuators_state?.pump_on :
+                            hwStatus.actuators_state?.shade_closed;
+                          return (
+                            <div key={act.key} className="flex items-center justify-between bg-slate-950 border border-slate-800 p-3 rounded-xl">
+                              <div>
+                                <div className="text-sm font-bold">{act.name}</div>
+                                <div className="text-[11px] text-slate-400 font-mono">{act.coil} • {isOn ? 'ACTIVE (ON)' : 'IDLE (OFF)'}</div>
+                              </div>
+                              <button
+                                onClick={() => togglePhysicalRelay(act.key, !isOn)}
+                                className={`px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 ${
+                                  isOn ? 'bg-emerald-600 text-white' : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+                                }`}
+                              >
+                                <Power className="w-3.5 h-3.5" /> {isOn ? 'Turn OFF' : 'Turn ON'}
+                              </button>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </>
                   )}
-
-                  {/* LIVE SENSOR READINGS (ONLY SHOWN WHEN PHYSICALLY WIRED) */}
-                  <div className="grid grid-cols-2 gap-3 mb-4">
-                    <div className="bg-slate-950 border border-slate-800 rounded-xl p-3.5">
-                      <div className="flex items-center justify-between text-xs text-slate-400">
-                        <span className="flex items-center gap-1"><Thermometer className="w-3.5 h-3.5 text-amber-400" /> Temp Probe (X0)</span>
-                        <span className={`text-[10px] px-1.5 py-0.5 rounded font-bold ${hwStatus.detected_equipment?.temp_sensor ? 'bg-emerald-500/20 text-emerald-400' : 'bg-slate-800 text-slate-500'}`}>
-                          {hwStatus.detected_equipment?.temp_sensor ? 'DETECTED' : 'NOT WIRED'}
-                        </span>
-                      </div>
-                      <div className="text-2xl font-bold text-amber-400 mt-2">
-                        {hwStatus.telemetry?.temp !== null ? `${hwStatus.telemetry.temp}°C` : '--.- °C'}
-                      </div>
-                    </div>
-
-                    <div className="bg-slate-950 border border-slate-800 rounded-xl p-3.5">
-                      <div className="flex items-center justify-between text-xs text-slate-400">
-                        <span className="flex items-center gap-1"><Sun className="w-3.5 h-3.5 text-yellow-400" /> Light Sensor (AI0)</span>
-                        <span className={`text-[10px] px-1.5 py-0.5 rounded font-bold ${hwStatus.detected_equipment?.light_sensor ? 'bg-emerald-500/20 text-emerald-400' : 'bg-slate-800 text-slate-500'}`}>
-                          {hwStatus.detected_equipment?.light_sensor ? 'DETECTED' : 'NOT WIRED'}
-                        </span>
-                      </div>
-                      <div className="text-2xl font-bold text-yellow-300 mt-2">
-                        {hwStatus.telemetry?.light !== null ? `${hwStatus.telemetry.light} lx` : '---- lx'}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* AUTO-DETECTED RELAYS & DIRECT SWITCHING */}
-                  <div className="space-y-2.5">
-                    <div className="text-xs font-bold uppercase tracking-wider text-slate-400">Connected Relay & Actuator Channels</div>
-                    
-                    <div className="flex items-center justify-between bg-slate-950 border border-slate-800 p-3 rounded-xl">
-                      <div>
-                        <div className="text-sm font-bold flex items-center gap-2">
-                          Cooling Fan Relay (Coil Y0)
-                          <span className={`text-[10px] px-1.5 py-0.5 rounded ${hwStatus.detected_equipment?.cooling_fan_relay ? 'bg-emerald-500/20 text-emerald-400' : 'bg-slate-800 text-slate-500'}`}>
-                            {hwStatus.detected_equipment?.cooling_fan_relay ? 'AUTO-DETECTED' : 'OFFLINE'}
-                          </span>
-                        </div>
-                        <div className="text-xs text-slate-400">State: {hwStatus.telemetry?.fan_on ? 'ENERGIZED (ON)' : 'IDLE (OFF)'}</div>
-                      </div>
-                      <button
-                        disabled={!hwStatus.online}
-                        onClick={() => togglePhysicalRelay('fan', !hwStatus.telemetry?.fan_on)}
-                        className={`px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 disabled:opacity-40 ${
-                          hwStatus.telemetry?.fan_on ? 'bg-emerald-600 text-white' : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
-                        }`}
-                      >
-                        <Power className="w-3.5 h-3.5" /> {hwStatus.telemetry?.fan_on ? 'Turn OFF' : 'Turn ON'}
-                      </button>
-                    </div>
-
-                    <div className="flex items-center justify-between bg-slate-950 border border-slate-800 p-3 rounded-xl">
-                      <div>
-                        <div className="text-sm font-bold flex items-center gap-2">
-                          Shade Net Servo (HReg Y1)
-                          <span className={`text-[10px] px-1.5 py-0.5 rounded ${hwStatus.detected_equipment?.shade_net_servo ? 'bg-emerald-500/20 text-emerald-400' : 'bg-slate-800 text-slate-500'}`}>
-                            {hwStatus.detected_equipment?.shade_net_servo ? 'AUTO-DETECTED' : 'OFFLINE'}
-                          </span>
-                        </div>
-                        <div className="text-xs text-slate-400">Position: {hwStatus.telemetry?.shade_closed ? 'CLOSED (90°)' : 'OPEN (0°)'}</div>
-                      </div>
-                      <button
-                        disabled={!hwStatus.online}
-                        onClick={() => togglePhysicalRelay('shade', !hwStatus.telemetry?.shade_closed)}
-                        className={`px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 disabled:opacity-40 ${
-                          hwStatus.telemetry?.shade_closed ? 'bg-cyan-600 text-white' : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
-                        }`}
-                      >
-                        <Power className="w-3.5 h-3.5" /> {hwStatus.telemetry?.shade_closed ? 'Open Net' : 'Close Net'}
-                      </button>
-                    </div>
-                  </div>
                 </div>
 
-                {/* LIVE MODBUS TCP PACKET LOG */}
+                {/* MODBUS LOGS */}
                 <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5">
                   <div className="flex items-center justify-between mb-2">
                     <h2 className="font-bold text-sm flex items-center gap-2">
@@ -602,9 +602,9 @@ export default function App() {
                     </h2>
                     <span className="text-xs text-slate-400">Polls: {packetsSent}</span>
                   </div>
-                  <div className="bg-slate-950 border border-slate-800 rounded-xl p-3 font-mono text-[11px] text-slate-300 space-y-1.5 h-44 overflow-y-auto">
+                  <div className="bg-slate-950 border border-slate-800 rounded-xl p-3 font-mono text-[11px] text-slate-300 space-y-1.5 h-40 overflow-y-auto">
                     {packetLogs.length === 0 ? (
-                      <div className="text-slate-500">Waiting for Modbus TCP responses from {activeGh.plc_ip}...</div>
+                      <div className="text-slate-500">Scanning hardware bus for {activeGh.plc_ip}...</div>
                     ) : (
                       packetLogs.map((log, i) => <div key={i} className="border-b border-slate-900 pb-1">{log}</div>)
                     )}
