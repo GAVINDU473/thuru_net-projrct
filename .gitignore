@@ -1,0 +1,10 @@
+# Python
+__pycache__/
+*.py[cod]
+*.db
+*.sqlite3
+
+# Node / React Frontend
+agrivoice-ui/node_modules/
+agrivoice-ui/dist/
+.env

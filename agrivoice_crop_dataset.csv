@@ -1,0 +1,553 @@
+Crop,Country,Growth_Day,Ambient_Temp,Optimal_Temp_Max,Optimal_Light_Lux,Fan_Trigger_C,Shade_Trigger_Lux
+Vanilla,Sri Lanka,10,31.0,27.5,15000,28.0,18000
+Vanilla,Sri Lanka,45,32.5,28.5,20000,29.0,22000
+Vanilla,Sri Lanka,90,30.0,26.5,18000,27.0,20000
+Strawberry,Japan,15,24.0,22.0,35000,23.0,40000
+Strawberry,Japan,50,26.0,20.5,45000,21.5,48000
+Strawberry,Sri Lanka,30,29.5,21.0,40000,22.0,42000
+Saffron,Iran,20,22.0,19.0,30000,20.0,35000
+Saffron,Sri Lanka,40,27.0,18.5,32000,19.5,35000
+Bell Pepper,Netherlands,25,23.0,25.0,50000,26.5,55000
+Bell Pepper,Sri Lanka,60,32.0,25.5,52000,27.0,56000
+Orchid,Thailand,30,33.0,26.0,22000,27.0,25000
+Orchid,Sri Lanka,75,31.5,25.0,20000,26.0,24000
+Vanilla,Sri Lanka,11,31.9,27.6,15294,28.1,18130
+Vanilla,Sri Lanka,47,32.8,28.7,20638,29.2,21121
+Vanilla,Sri Lanka,87,28.8,26.9,18482,27.4,19087
+Strawberry,Japan,14,24.3,21.9,35687,22.9,39130
+Strawberry,Japan,50,24.7,20.0,44343,21.0,48515
+Strawberry,Sri Lanka,30,28.0,20.7,39955,21.7,41276
+Saffron,Iran,15,21.4,18.9,29021,19.9,34252
+Saffron,Sri Lanka,43,26.4,18.1,32082,19.1,34510
+Bell Pepper,Netherlands,29,21.6,25.1,49699,26.6,54975
+Bell Pepper,Sri Lanka,57,31.6,25.8,52267,27.3,55831
+Orchid,Thailand,33,31.6,26.2,22842,27.2,24646
+Orchid,Sri Lanka,74,31.4,25.4,20297,26.4,23387
+Vanilla,Sri Lanka,13,32.4,27.6,14241,28.1,17776
+Vanilla,Sri Lanka,49,31.3,28.7,20363,29.2,21091
+Vanilla,Sri Lanka,91,30.3,27.0,17775,27.5,20966
+Strawberry,Japan,12,25.2,21.9,35955,22.9,40585
+Strawberry,Japan,52,26.8,20.0,45021,21.0,48413
+Strawberry,Sri Lanka,30,29.6,20.7,40845,21.7,42500
+Saffron,Iran,16,22.8,18.8,29161,19.8,34201
+Saffron,Sri Lanka,38,27.3,18.1,31815,19.1,35294
+Bell Pepper,Netherlands,27,23.2,25.1,50275,26.6,55016
+Bell Pepper,Sri Lanka,62,33.0,25.8,52772,27.3,55337
+Orchid,Thailand,29,33.3,26.1,21216,27.1,24763
+Orchid,Sri Lanka,78,30.9,25.4,20836,26.4,23064
+Vanilla,Sri Lanka,13,32.5,27.6,15367,28.1,18152
+Vanilla,Sri Lanka,47,31.0,28.7,20162,29.2,22522
+Vanilla,Sri Lanka,85,30.6,26.9,17418,27.4,19288
+Strawberry,Japan,20,22.7,21.8,34230,22.8,40017
+Strawberry,Japan,53,27.2,20.0,44200,21.0,48863
+Strawberry,Sri Lanka,26,28.3,20.7,39502,21.7,41406
+Saffron,Iran,22,22.5,18.8,29683,19.8,35895
+Saffron,Sri Lanka,40,28.2,18.1,31960,19.1,35762
+Bell Pepper,Netherlands,24,24.4,25.1,49642,26.6,55792
+Bell Pepper,Sri Lanka,59,32.2,25.8,51766,27.3,55397
+Orchid,Thailand,31,31.6,26.2,21206,27.2,25038
+Orchid,Sri Lanka,79,30.1,25.4,20484,26.4,24714
+Vanilla,Sri Lanka,11,30.9,27.6,15020,28.1,17095
+Vanilla,Sri Lanka,43,33.7,28.7,20430,29.2,21230
+Vanilla,Sri Lanka,95,29.1,27.0,17524,27.5,20183
+Strawberry,Japan,16,23.4,21.8,35109,22.8,40819
+Strawberry,Japan,46,26.4,20.0,45597,21.0,48976
+Strawberry,Sri Lanka,29,30.6,20.7,40051,21.7,42643
+Saffron,Iran,18,23.2,18.8,30354,19.8,35663
+Saffron,Sri Lanka,44,25.9,18.1,32496,19.1,35254
+Bell Pepper,Netherlands,20,22.3,25.1,50306,26.6,55981
+Bell Pepper,Sri Lanka,63,33.0,25.8,52768,27.3,56282
+Orchid,Thailand,31,32.0,26.2,22434,27.2,24648
+Orchid,Sri Lanka,74,32.1,25.4,20257,26.4,23683
+Vanilla,Sri Lanka,12,32.3,27.6,15397,28.1,18695
+Vanilla,Sri Lanka,47,33.1,28.7,20136,29.2,22853
+Vanilla,Sri Lanka,85,29.3,26.9,18291,27.4,20533
+Strawberry,Japan,16,24.0,21.8,35136,22.8,40636
+Strawberry,Japan,45,27.5,20.1,44698,21.1,47112
+Strawberry,Sri Lanka,26,29.5,20.7,40589,21.7,41854
+Saffron,Iran,19,21.5,18.8,29384,19.8,35426
+Saffron,Sri Lanka,36,27.1,18.1,31729,19.1,35695
+Bell Pepper,Netherlands,25,22.2,25.1,49835,26.6,55462
+Bell Pepper,Sri Lanka,65,31.6,25.8,51400,27.3,55766
+Orchid,Thailand,30,32.6,26.1,21883,27.1,25633
+Orchid,Sri Lanka,75,31.2,25.4,20534,26.4,23751
+Vanilla,Sri Lanka,5,30.0,27.5,14186,28.0,18349
+Vanilla,Sri Lanka,42,32.8,28.7,19954,29.2,22955
+Vanilla,Sri Lanka,87,30.6,26.9,18534,27.4,19146
+Strawberry,Japan,13,24.4,21.9,35843,22.9,39488
+Strawberry,Japan,45,25.7,20.1,44550,21.1,47337
+Strawberry,Sri Lanka,32,28.4,20.7,40976,21.7,41472
+Saffron,Iran,16,23.3,18.8,30321,19.8,35634
+Saffron,Sri Lanka,41,27.5,18.1,31345,19.1,34623
+Bell Pepper,Netherlands,28,23.0,25.1,49880,26.6,54001
+Bell Pepper,Sri Lanka,55,30.8,25.8,52675,27.3,55452
+Orchid,Thailand,29,34.1,26.1,22014,27.1,24008
+Orchid,Sri Lanka,78,31.0,25.4,19815,26.4,23207
+Vanilla,Sri Lanka,7,32.1,27.5,14053,28.0,18143
+Vanilla,Sri Lanka,40,32.9,28.7,19586,29.2,22648
+Vanilla,Sri Lanka,92,30.9,27.0,17103,27.5,20875
+Strawberry,Japan,12,23.6,21.9,35496,22.9,39098
+Strawberry,Japan,53,24.5,20.0,45919,21.0,47877
+Strawberry,Sri Lanka,26,29.5,20.7,40186,21.7,42743
+Saffron,Iran,23,21.0,18.8,30603,19.8,34800
+Saffron,Sri Lanka,39,26.0,18.1,32527,19.1,35919
+Bell Pepper,Netherlands,27,24.0,25.1,49400,26.6,54639
+Bell Pepper,Sri Lanka,55,32.1,25.8,51954,27.3,56906
+Orchid,Thailand,30,32.3,26.1,21749,27.1,25693
+Orchid,Sri Lanka,75,32.9,25.4,19562,26.4,23437
+Vanilla,Sri Lanka,12,31.4,27.6,14225,28.1,18300
+Vanilla,Sri Lanka,40,32.7,28.7,19959,29.2,22504
+Vanilla,Sri Lanka,89,29.2,26.9,17815,27.4,19658
+Strawberry,Japan,13,22.6,21.9,35072,22.9,40535
+Strawberry,Japan,45,27.5,20.1,44157,21.1,47476
+Strawberry,Sri Lanka,29,30.7,20.7,40915,21.7,42768
+Saffron,Iran,19,23.3,18.8,29496,19.8,34301
+Saffron,Sri Lanka,39,27.2,18.1,31699,19.1,34992
+Bell Pepper,Netherlands,23,22.4,25.1,49980,26.6,54927
+Bell Pepper,Sri Lanka,61,31.3,25.8,52346,27.3,55127
+Orchid,Thailand,26,33.2,26.1,22758,27.1,24565
+Orchid,Sri Lanka,79,32.8,25.4,19685,26.4,24815
+Vanilla,Sri Lanka,6,31.3,27.5,14853,28.0,18686
+Vanilla,Sri Lanka,41,31.8,28.7,19489,29.2,22409
+Vanilla,Sri Lanka,94,30.7,27.0,18952,27.5,20416
+Strawberry,Japan,20,24.6,21.8,35062,22.8,40500
+Strawberry,Japan,54,26.9,20.0,45890,21.0,48841
+Strawberry,Sri Lanka,33,29.8,20.7,39827,21.7,42529
+Saffron,Iran,21,22.0,18.8,29684,19.8,34019
+Saffron,Sri Lanka,35,25.7,18.1,31399,19.1,34653
+Bell Pepper,Netherlands,22,22.5,25.1,50115,26.6,55377
+Bell Pepper,Sri Lanka,56,31.8,25.8,52982,27.3,55853
+Orchid,Thailand,27,32.9,26.1,21574,27.1,25213
+Orchid,Sri Lanka,75,31.8,25.4,20365,26.4,23304
+Vanilla,Sri Lanka,8,29.6,27.5,15806,28.0,18077
+Vanilla,Sri Lanka,50,31.4,28.8,19992,29.2,21263
+Vanilla,Sri Lanka,89,29.3,26.9,18643,27.4,19004
+Strawberry,Japan,16,22.8,21.8,34876,22.8,39991
+Strawberry,Japan,48,25.7,20.0,44866,21.0,47822
+Strawberry,Sri Lanka,32,30.2,20.7,39268,21.7,41369
+Saffron,Iran,24,21.5,18.8,29656,19.8,34119
+Saffron,Sri Lanka,37,26.8,18.1,32974,19.1,35369
+Bell Pepper,Netherlands,24,22.1,25.1,50853,26.6,54790
+Bell Pepper,Sri Lanka,63,32.6,25.8,52664,27.3,56081
+Orchid,Thailand,34,32.0,26.2,21801,27.2,25119
+Orchid,Sri Lanka,75,32.1,25.4,19487,26.4,24260
+Vanilla,Sri Lanka,9,31.4,27.5,15212,28.0,17703
+Vanilla,Sri Lanka,44,32.8,28.7,19246,29.2,22986
+Vanilla,Sri Lanka,94,29.6,27.0,17996,27.5,20109
+Strawberry,Japan,18,23.5,21.8,35243,22.8,40092
+Strawberry,Japan,45,25.4,20.1,44957,21.1,48011
+Strawberry,Sri Lanka,29,29.4,20.7,39217,21.7,41473
+Saffron,Iran,19,21.9,18.8,30312,19.8,35277
+Saffron,Sri Lanka,39,26.7,18.1,31521,19.1,35781
+Bell Pepper,Netherlands,24,24.2,25.1,50203,26.6,55246
+Bell Pepper,Sri Lanka,64,32.4,25.8,51441,27.3,56631
+Orchid,Thailand,25,33.1,26.1,21515,27.1,25039
+Orchid,Sri Lanka,77,32.8,25.4,19257,26.4,23496
+Vanilla,Sri Lanka,15,31.9,27.6,15931,28.1,17689
+Vanilla,Sri Lanka,42,32.9,28.7,20952,29.2,21956
+Vanilla,Sri Lanka,87,31.0,26.9,18291,27.4,20858
+Strawberry,Japan,10,25.4,21.9,35865,22.9,40066
+Strawberry,Japan,46,24.6,20.0,44753,21.0,47034
+Strawberry,Sri Lanka,31,28.2,20.7,39775,21.7,41604
+Saffron,Iran,24,22.5,18.8,30021,19.8,34417
+Saffron,Sri Lanka,37,26.3,18.1,32219,19.1,34825
+Bell Pepper,Netherlands,24,22.5,25.1,50098,26.6,54412
+Bell Pepper,Sri Lanka,62,32.7,25.8,52300,27.3,56020
+Orchid,Thailand,33,33.1,26.2,22892,27.2,24456
+Orchid,Sri Lanka,77,32.4,25.4,20712,26.4,24122
+Vanilla,Sri Lanka,8,30.6,27.5,14095,28.0,18687
+Vanilla,Sri Lanka,46,33.8,28.7,19036,29.2,22803
+Vanilla,Sri Lanka,85,30.5,26.9,17278,27.4,19216
+Strawberry,Japan,12,22.8,21.9,35296,22.9,40904
+Strawberry,Japan,48,27.0,20.0,45365,21.0,47396
+Strawberry,Sri Lanka,35,28.3,20.6,40635,21.6,41395
+Saffron,Iran,23,23.0,18.8,29264,19.8,34454
+Saffron,Sri Lanka,38,27.2,18.1,32390,19.1,34143
+Bell Pepper,Netherlands,24,21.8,25.1,49395,26.6,55048
+Bell Pepper,Sri Lanka,58,32.5,25.8,52507,27.3,56588
+Orchid,Thailand,31,33.8,26.2,22062,27.2,24108
+Orchid,Sri Lanka,74,31.5,25.4,19934,26.4,23397
+Vanilla,Sri Lanka,14,30.8,27.6,15238,28.1,17732
+Vanilla,Sri Lanka,50,33.1,28.8,19750,29.2,21587
+Vanilla,Sri Lanka,93,30.8,27.0,17491,27.5,19912
+Strawberry,Japan,15,22.8,21.9,35676,22.9,40191
+Strawberry,Japan,54,25.7,20.0,44794,21.0,47633
+Strawberry,Sri Lanka,26,28.2,20.7,40188,21.7,42445
+Saffron,Iran,17,22.2,18.8,30388,19.8,35856
+Saffron,Sri Lanka,40,27.9,18.1,31510,19.1,35350
+Bell Pepper,Netherlands,28,23.3,25.1,50827,26.6,55093
+Bell Pepper,Sri Lanka,57,32.8,25.8,52205,27.3,55166
+Orchid,Thailand,35,32.2,26.2,22554,27.2,24038
+Orchid,Sri Lanka,72,30.8,25.4,19753,26.4,24243
+Vanilla,Sri Lanka,14,31.7,27.6,14455,28.1,17828
+Vanilla,Sri Lanka,48,33.2,28.7,19386,29.2,22996
+Vanilla,Sri Lanka,93,29.6,27.0,18392,27.5,20432
+Strawberry,Japan,17,24.1,21.8,35140,22.8,39133
+Strawberry,Japan,54,24.5,20.0,44671,21.0,47172
+Strawberry,Sri Lanka,29,28.1,20.7,40236,21.7,41202
+Saffron,Iran,19,21.3,18.8,30682,19.8,35555
+Saffron,Sri Lanka,43,27.1,18.1,32256,19.1,35328
+Bell Pepper,Netherlands,20,23.4,25.1,50909,26.6,55282
+Bell Pepper,Sri Lanka,61,30.6,25.8,52035,27.3,56353
+Orchid,Thailand,32,32.7,26.2,22431,27.2,24667
+Orchid,Sri Lanka,74,30.8,25.4,20371,26.4,23675
+Vanilla,Sri Lanka,14,30.7,27.6,15339,28.1,18201
+Vanilla,Sri Lanka,44,33.9,28.7,20727,29.2,22946
+Vanilla,Sri Lanka,90,28.6,26.9,18224,27.4,19928
+Strawberry,Japan,14,24.9,21.9,34731,22.9,39751
+Strawberry,Japan,47,27.0,20.0,45617,21.0,47882
+Strawberry,Sri Lanka,29,29.8,20.7,39449,21.7,41009
+Saffron,Iran,22,23.1,18.8,30274,19.8,34876
+Saffron,Sri Lanka,39,25.6,18.1,32824,19.1,34373
+Bell Pepper,Netherlands,20,22.9,25.1,50262,26.6,54176
+Bell Pepper,Sri Lanka,65,32.3,25.8,51062,27.3,56240
+Orchid,Thailand,30,34.0,26.1,21688,27.1,25484
+Orchid,Sri Lanka,70,31.4,25.4,20122,26.4,23510
+Vanilla,Sri Lanka,5,29.5,27.5,14822,28.0,17517
+Vanilla,Sri Lanka,40,32.6,28.7,20668,29.2,22893
+Vanilla,Sri Lanka,87,30.2,26.9,17996,27.4,20588
+Strawberry,Japan,14,24.8,21.9,34082,22.9,40168
+Strawberry,Japan,49,25.9,20.0,45901,21.0,47000
+Strawberry,Sri Lanka,27,28.8,20.7,40795,21.7,42469
+Saffron,Iran,15,22.5,18.9,30823,19.9,34033
+Saffron,Sri Lanka,42,25.6,18.1,31249,19.1,34673
+Bell Pepper,Netherlands,25,23.8,25.1,50914,26.6,55329
+Bell Pepper,Sri Lanka,55,32.2,25.8,51388,27.3,55989
+Orchid,Thailand,35,32.7,26.2,21623,27.2,24766
+Orchid,Sri Lanka,76,32.3,25.4,19852,26.4,24933
+Vanilla,Sri Lanka,6,31.9,27.5,14102,28.0,18445
+Vanilla,Sri Lanka,41,32.1,28.7,19097,29.2,22873
+Vanilla,Sri Lanka,95,28.8,27.0,18331,27.5,19248
+Strawberry,Japan,15,23.9,21.9,35358,22.9,40019
+Strawberry,Japan,51,26.1,20.0,44080,21.0,47132
+Strawberry,Sri Lanka,28,29.4,20.7,40424,21.7,42353
+Saffron,Iran,15,21.3,18.9,29983,19.9,34068
+Saffron,Sri Lanka,36,27.4,18.1,32473,19.1,34204
+Bell Pepper,Netherlands,30,23.2,25.1,50994,26.6,55906
+Bell Pepper,Sri Lanka,63,31.9,25.8,51847,27.3,55094
+Orchid,Thailand,35,31.9,26.2,22543,27.2,24899
+Orchid,Sri Lanka,77,32.1,25.4,19280,26.4,24218
+Vanilla,Sri Lanka,7,31.0,27.5,14671,28.0,18969
+Vanilla,Sri Lanka,49,31.7,28.7,20812,29.2,22028
+Vanilla,Sri Lanka,86,29.3,26.9,18852,27.4,19533
+Strawberry,Japan,14,24.1,21.9,34644,22.9,39232
+Strawberry,Japan,54,27.2,20.0,45968,21.0,48101
+Strawberry,Sri Lanka,34,30.1,20.7,40096,21.7,41793
+Saffron,Iran,23,21.9,18.8,29213,19.8,34238
+Saffron,Sri Lanka,42,28.1,18.1,31830,19.1,34047
+Bell Pepper,Netherlands,20,22.3,25.1,50280,26.6,54007
+Bell Pepper,Sri Lanka,55,32.3,25.8,52715,27.3,55718
+Orchid,Thailand,32,33.0,26.2,21473,27.2,24027
+Orchid,Sri Lanka,76,31.6,25.4,20409,26.4,23364
+Vanilla,Sri Lanka,14,29.6,27.6,15335,28.1,17882
+Vanilla,Sri Lanka,46,33.1,28.7,19918,29.2,21749
+Vanilla,Sri Lanka,95,30.1,27.0,18297,27.5,20529
+Strawberry,Japan,15,24.1,21.9,35038,22.9,40215
+Strawberry,Japan,53,26.7,20.0,44027,21.0,47713
+Strawberry,Sri Lanka,31,29.0,20.7,40254,21.7,41085
+Saffron,Iran,24,22.1,18.8,29536,19.8,34144
+Saffron,Sri Lanka,38,26.9,18.1,32417,19.1,34066
+Bell Pepper,Netherlands,28,23.0,25.1,49110,26.6,54227
+Bell Pepper,Sri Lanka,60,32.3,25.8,52799,27.3,56959
+Orchid,Thailand,25,33.2,26.1,22577,27.1,24424
+Orchid,Sri Lanka,74,31.1,25.4,20305,26.4,24343
+Vanilla,Sri Lanka,6,30.2,27.5,14314,28.0,17876
+Vanilla,Sri Lanka,45,32.8,28.7,20312,29.2,22460
+Vanilla,Sri Lanka,90,29.2,26.9,18605,27.4,20526
+Strawberry,Japan,13,25.1,21.9,35469,22.9,40853
+Strawberry,Japan,52,27.2,20.0,44758,21.0,47898
+Strawberry,Sri Lanka,27,28.1,20.7,39228,21.7,41547
+Saffron,Iran,22,20.8,18.8,30345,19.8,34467
+Saffron,Sri Lanka,45,28.1,18.1,31645,19.1,34117
+Bell Pepper,Netherlands,20,23.0,25.1,49946,26.6,54573
+Bell Pepper,Sri Lanka,63,32.7,25.8,51714,27.3,56415
+Orchid,Thailand,34,32.3,26.2,22323,27.2,25668
+Orchid,Sri Lanka,75,32.9,25.4,19835,26.4,24810
+Vanilla,Sri Lanka,8,31.0,27.5,14112,28.0,17139
+Vanilla,Sri Lanka,40,32.8,28.7,19319,29.2,22573
+Vanilla,Sri Lanka,89,30.0,26.9,18534,27.4,20891
+Strawberry,Japan,20,24.3,21.8,34901,22.8,39689
+Strawberry,Japan,52,24.9,20.0,45942,21.0,48673
+Strawberry,Sri Lanka,26,29.0,20.7,40665,21.7,42619
+Saffron,Iran,15,20.9,18.9,29328,19.9,34784
+Saffron,Sri Lanka,43,27.3,18.1,32943,19.1,35573
+Bell Pepper,Netherlands,26,23.9,25.1,50118,26.6,55840
+Bell Pepper,Sri Lanka,59,33.0,25.8,51235,27.3,56969
+Orchid,Thailand,29,33.7,26.1,22160,27.1,25953
+Orchid,Sri Lanka,72,30.2,25.4,20319,26.4,24343
+Vanilla,Sri Lanka,10,29.6,27.6,15372,28.1,18863
+Vanilla,Sri Lanka,50,33.4,28.8,19269,29.2,22851
+Vanilla,Sri Lanka,87,29.0,26.9,17004,27.4,19850
+Strawberry,Japan,20,24.4,21.8,34573,22.8,39131
+Strawberry,Japan,53,27.1,20.0,44088,21.0,47401
+Strawberry,Sri Lanka,32,29.4,20.7,39615,21.7,42549
+Saffron,Iran,17,22.4,18.8,30888,19.8,35046
+Saffron,Sri Lanka,35,26.2,18.1,32248,19.1,35006
+Bell Pepper,Netherlands,26,23.1,25.1,49820,26.6,55639
+Bell Pepper,Sri Lanka,62,32.4,25.8,52970,27.3,55197
+Orchid,Thailand,30,32.5,26.1,22202,27.1,25991
+Orchid,Sri Lanka,79,30.4,25.4,20038,26.4,24646
+Vanilla,Sri Lanka,5,31.1,27.5,15254,28.0,17922
+Vanilla,Sri Lanka,43,34.0,28.7,20464,29.2,22120
+Vanilla,Sri Lanka,89,30.8,26.9,17288,27.4,20277
+Strawberry,Japan,13,24.2,21.9,35545,22.9,39516
+Strawberry,Japan,55,26.8,19.9,45141,20.9,47805
+Strawberry,Sri Lanka,28,29.4,20.7,39947,21.7,42719
+Saffron,Iran,22,20.9,18.8,29046,19.8,34323
+Saffron,Sri Lanka,36,25.5,18.1,31626,19.1,34754
+Bell Pepper,Netherlands,23,23.1,25.1,50834,26.6,55306
+Bell Pepper,Sri Lanka,59,33.0,25.8,52277,27.3,56865
+Orchid,Thailand,32,33.3,26.2,21711,27.2,24022
+Orchid,Sri Lanka,79,32.8,25.4,19395,26.4,23217
+Vanilla,Sri Lanka,12,31.0,27.6,14984,28.1,17992
+Vanilla,Sri Lanka,47,33.6,28.7,20483,29.2,22003
+Vanilla,Sri Lanka,88,31.3,26.9,18156,27.4,19887
+Strawberry,Japan,14,24.6,21.9,35129,22.9,40008
+Strawberry,Japan,54,24.7,20.0,44050,21.0,48052
+Strawberry,Sri Lanka,32,30.5,20.7,39778,21.7,42430
+Saffron,Iran,15,20.8,18.9,30428,19.9,35369
+Saffron,Sri Lanka,38,25.9,18.1,31824,19.1,35024
+Bell Pepper,Netherlands,25,23.1,25.1,49935,26.6,55934
+Bell Pepper,Sri Lanka,59,31.6,25.8,52332,27.3,56160
+Orchid,Thailand,34,33.9,26.2,21116,27.2,25689
+Orchid,Sri Lanka,78,30.3,25.4,19243,26.4,23536
+Vanilla,Sri Lanka,14,32.3,27.6,14385,28.1,18926
+Vanilla,Sri Lanka,41,32.4,28.7,19346,29.2,22552
+Vanilla,Sri Lanka,95,28.6,27.0,17762,27.5,20202
+Strawberry,Japan,15,23.0,21.9,35990,22.9,40203
+Strawberry,Japan,50,24.6,20.0,45184,21.0,47176
+Strawberry,Sri Lanka,35,29.9,20.6,39155,21.6,42905
+Saffron,Iran,19,22.0,18.8,29848,19.8,35107
+Saffron,Sri Lanka,43,25.9,18.1,32653,19.1,34341
+Bell Pepper,Netherlands,27,23.0,25.1,50792,26.6,55759
+Bell Pepper,Sri Lanka,61,31.8,25.8,51951,27.3,55722
+Orchid,Thailand,25,31.6,26.1,21285,27.1,25167
+Orchid,Sri Lanka,77,31.8,25.4,19768,26.4,23589
+Vanilla,Sri Lanka,7,30.9,27.5,14193,28.0,17501
+Vanilla,Sri Lanka,40,32.2,28.7,20701,29.2,21946
+Vanilla,Sri Lanka,88,29.0,26.9,17924,27.4,19054
+Strawberry,Japan,16,24.8,21.8,34777,22.8,40481
+Strawberry,Japan,47,26.4,20.0,45403,21.0,47086
+Strawberry,Sri Lanka,31,28.5,20.7,40201,21.7,42414
+Saffron,Iran,22,20.6,18.8,29758,19.8,35858
+Saffron,Sri Lanka,42,26.1,18.1,32790,19.1,34327
+Bell Pepper,Netherlands,25,22.5,25.1,50252,26.6,54578
+Bell Pepper,Sri Lanka,57,32.5,25.8,52006,27.3,56287
+Orchid,Thailand,26,33.9,26.1,22111,27.1,25101
+Orchid,Sri Lanka,77,32.4,25.4,20935,26.4,23451
+Vanilla,Sri Lanka,8,31.5,27.5,14468,28.0,17909
+Vanilla,Sri Lanka,46,33.7,28.7,19006,29.2,21329
+Vanilla,Sri Lanka,91,30.7,27.0,18108,27.5,19146
+Strawberry,Japan,12,24.2,21.9,34699,22.9,39081
+Strawberry,Japan,46,27.2,20.0,44708,21.0,48939
+Strawberry,Sri Lanka,35,28.8,20.6,40409,21.6,41706
+Saffron,Iran,21,20.6,18.8,30555,19.8,34260
+Saffron,Sri Lanka,39,26.7,18.1,32757,19.1,34904
+Bell Pepper,Netherlands,21,24.1,25.1,50890,26.6,55523
+Bell Pepper,Sri Lanka,64,32.8,25.8,52303,27.3,55592
+Orchid,Thailand,34,33.2,26.2,21058,27.2,25750
+Orchid,Sri Lanka,70,31.5,25.4,20232,26.4,23525
+Vanilla,Sri Lanka,13,31.1,27.6,14236,28.1,18304
+Vanilla,Sri Lanka,46,31.7,28.7,20301,29.2,22258
+Vanilla,Sri Lanka,88,28.9,26.9,17028,27.4,20132
+Strawberry,Japan,11,23.3,21.9,34074,22.9,39837
+Strawberry,Japan,46,26.1,20.0,44041,21.0,48379
+Strawberry,Sri Lanka,33,28.8,20.7,40040,21.7,42700
+Saffron,Iran,23,22.0,18.8,29587,19.8,35622
+Saffron,Sri Lanka,39,25.5,18.1,31026,19.1,35848
+Bell Pepper,Netherlands,25,23.7,25.1,49609,26.6,54267
+Bell Pepper,Sri Lanka,63,32.0,25.8,51905,27.3,56708
+Orchid,Thailand,25,32.8,26.1,22499,27.1,24701
+Orchid,Sri Lanka,79,31.3,25.4,19129,26.4,24019
+Vanilla,Sri Lanka,10,31.7,27.6,14818,28.1,17692
+Vanilla,Sri Lanka,43,33.3,28.7,19028,29.2,21148
+Vanilla,Sri Lanka,95,29.4,27.0,18535,27.5,19675
+Strawberry,Japan,10,24.7,21.9,34743,22.9,40250
+Strawberry,Japan,50,25.9,20.0,44622,21.0,47663
+Strawberry,Sri Lanka,30,28.4,20.7,40335,21.7,42312
+Saffron,Iran,24,20.6,18.8,30171,19.8,35490
+Saffron,Sri Lanka,37,28.0,18.1,32872,19.1,34957
+Bell Pepper,Netherlands,30,23.3,25.1,49481,26.6,54200
+Bell Pepper,Sri Lanka,64,31.9,25.8,51072,27.3,55712
+Orchid,Thailand,32,33.7,26.2,22240,27.2,24060
+Orchid,Sri Lanka,80,31.8,25.4,19024,26.4,24062
+Vanilla,Sri Lanka,7,32.0,27.5,15252,28.0,17107
+Vanilla,Sri Lanka,42,31.8,28.7,19865,29.2,21523
+Vanilla,Sri Lanka,87,29.4,26.9,18978,27.4,19816
+Strawberry,Japan,10,25.4,21.9,35846,22.9,40520
+Strawberry,Japan,52,26.8,20.0,44660,21.0,48104
+Strawberry,Sri Lanka,31,30.2,20.7,39975,21.7,41709
+Saffron,Iran,22,21.2,18.8,30112,19.8,35291
+Saffron,Sri Lanka,45,28.5,18.1,32900,19.1,35561
+Bell Pepper,Netherlands,29,23.3,25.1,49400,26.6,55942
+Bell Pepper,Sri Lanka,64,32.2,25.8,51249,27.3,55390
+Orchid,Thailand,29,33.7,26.1,21882,27.1,24687
+Orchid,Sri Lanka,77,32.9,25.4,19726,26.4,24500
+Vanilla,Sri Lanka,6,31.7,27.5,14371,28.0,17934
+Vanilla,Sri Lanka,42,32.0,28.7,20513,29.2,21614
+Vanilla,Sri Lanka,85,30.5,26.9,18175,27.4,19994
+Strawberry,Japan,11,25.2,21.9,35194,22.9,39935
+Strawberry,Japan,54,26.7,20.0,44363,21.0,47038
+Strawberry,Sri Lanka,32,29.6,20.7,40372,21.7,41981
+Saffron,Iran,23,22.7,18.8,30184,19.8,34015
+Saffron,Sri Lanka,44,28.1,18.1,32473,19.1,34310
+Bell Pepper,Netherlands,22,24.1,25.1,49413,26.6,54250
+Bell Pepper,Sri Lanka,61,31.1,25.8,52297,27.3,56439
+Orchid,Thailand,27,31.7,26.1,21813,27.1,24028
+Orchid,Sri Lanka,70,31.2,25.4,19244,26.4,23747
+Vanilla,Sri Lanka,13,31.2,27.6,15771,28.1,18262
+Vanilla,Sri Lanka,48,33.3,28.7,19920,29.2,22382
+Vanilla,Sri Lanka,88,30.7,26.9,18712,27.4,19002
+Strawberry,Japan,17,23.4,21.8,34323,22.8,39145
+Strawberry,Japan,49,24.6,20.0,44704,21.0,47948
+Strawberry,Sri Lanka,33,28.3,20.7,40912,21.7,42367
+Saffron,Iran,18,21.2,18.8,30828,19.8,34060
+Saffron,Sri Lanka,39,25.8,18.1,31709,19.1,34806
+Bell Pepper,Netherlands,27,24.2,25.1,50367,26.6,54010
+Bell Pepper,Sri Lanka,56,31.0,25.8,51563,27.3,55771
+Orchid,Thailand,35,32.7,26.2,22884,27.2,25598
+Orchid,Sri Lanka,75,31.8,25.4,20516,26.4,24389
+Vanilla,Sri Lanka,14,29.6,27.6,14824,28.1,17217
+Vanilla,Sri Lanka,48,31.6,28.7,19258,29.2,22911
+Vanilla,Sri Lanka,90,30.9,26.9,17053,27.4,20070
+Strawberry,Japan,16,25.2,21.8,35122,22.8,40043
+Strawberry,Japan,54,26.1,20.0,45914,21.0,48513
+Strawberry,Sri Lanka,27,30.3,20.7,39061,21.7,42168
+Saffron,Iran,22,23.2,18.8,30762,19.8,34780
+Saffron,Sri Lanka,42,27.7,18.1,32112,19.1,34328
+Bell Pepper,Netherlands,23,23.2,25.1,50633,26.6,55290
+Bell Pepper,Sri Lanka,63,31.7,25.8,51634,27.3,55987
+Orchid,Thailand,33,31.6,26.2,21737,27.2,25355
+Orchid,Sri Lanka,79,32.4,25.4,19039,26.4,24560
+Vanilla,Sri Lanka,9,31.7,27.5,15249,28.0,17983
+Vanilla,Sri Lanka,45,31.8,28.7,20924,29.2,22199
+Vanilla,Sri Lanka,94,30.1,27.0,17036,27.5,20339
+Strawberry,Japan,14,25.5,21.9,35137,22.9,40063
+Strawberry,Japan,47,27.0,20.0,45591,21.0,48063
+Strawberry,Sri Lanka,26,29.6,20.7,40996,21.7,42772
+Saffron,Iran,15,23.1,18.9,30170,19.9,34335
+Saffron,Sri Lanka,42,26.2,18.1,31570,19.1,35594
+Bell Pepper,Netherlands,28,22.5,25.1,49556,26.6,55368
+Bell Pepper,Sri Lanka,59,32.5,25.8,51190,27.3,56690
+Orchid,Thailand,30,32.1,26.1,21132,27.1,25770
+Orchid,Sri Lanka,79,31.4,25.4,20054,26.4,23534
+Vanilla,Sri Lanka,14,29.9,27.6,14362,28.1,18460
+Vanilla,Sri Lanka,46,31.5,28.7,19355,29.2,22281
+Vanilla,Sri Lanka,91,29.1,27.0,18548,27.5,20069
+Strawberry,Japan,20,25.4,21.8,34016,22.8,39359
+Strawberry,Japan,46,26.4,20.0,44855,21.0,47364
+Strawberry,Sri Lanka,27,28.4,20.7,39466,21.7,41413
+Saffron,Iran,21,22.1,18.8,30247,19.8,34993
+Saffron,Sri Lanka,39,25.8,18.1,32219,19.1,34915
+Bell Pepper,Netherlands,23,21.7,25.1,49730,26.6,54191
+Bell Pepper,Sri Lanka,55,32.8,25.8,51400,27.3,56929
+Orchid,Thailand,30,32.5,26.1,21473,27.1,25143
+Orchid,Sri Lanka,80,32.6,25.4,20293,26.4,23703
+Vanilla,Sri Lanka,8,31.4,27.5,14947,28.0,17380
+Vanilla,Sri Lanka,46,31.2,28.7,20056,29.2,22669
+Vanilla,Sri Lanka,87,29.3,26.9,18561,27.4,20505
+Strawberry,Japan,11,25.5,21.9,35122,22.9,39396
+Strawberry,Japan,53,25.0,20.0,44886,21.0,47796
+Strawberry,Sri Lanka,35,28.7,20.6,40153,21.6,42710
+Saffron,Iran,18,22.5,18.8,30562,19.8,35730
+Saffron,Sri Lanka,35,28.4,18.1,32463,19.1,35627
+Bell Pepper,Netherlands,24,24.2,25.1,49868,26.6,55978
+Bell Pepper,Sri Lanka,58,31.7,25.8,52976,27.3,56476
+Orchid,Thailand,27,32.4,26.1,21569,27.1,25915
+Orchid,Sri Lanka,75,30.7,25.4,20980,26.4,24186
+Vanilla,Sri Lanka,5,31.5,27.5,15547,28.0,18809
+Vanilla,Sri Lanka,50,33.9,28.8,19429,29.2,21984
+Vanilla,Sri Lanka,85,28.8,26.9,17519,27.4,19590
+Strawberry,Japan,20,25.0,21.8,34198,22.8,39386
+Strawberry,Japan,49,27.2,20.0,44377,21.0,47898
+Strawberry,Sri Lanka,28,30.4,20.7,40176,21.7,41733
+Saffron,Iran,21,20.9,18.8,30259,19.8,35875
+Saffron,Sri Lanka,38,27.2,18.1,32967,19.1,35016
+Bell Pepper,Netherlands,25,23.2,25.1,49116,26.6,54385
+Bell Pepper,Sri Lanka,62,31.8,25.8,52087,27.3,56740
+Orchid,Thailand,25,31.5,26.1,21273,27.1,25343
+Orchid,Sri Lanka,71,31.4,25.4,19606,26.4,23165
+Vanilla,Sri Lanka,15,31.6,27.6,14800,28.1,17101
+Vanilla,Sri Lanka,48,31.1,28.7,19213,29.2,22714
+Vanilla,Sri Lanka,92,28.9,27.0,17587,27.5,19888
+Strawberry,Japan,15,24.4,21.9,35683,22.9,39672
+Strawberry,Japan,54,26.8,20.0,44241,21.0,48888
+Strawberry,Sri Lanka,26,29.6,20.7,40768,21.7,42996
+Saffron,Iran,15,23.0,18.9,30689,19.9,34917
+Saffron,Sri Lanka,41,25.9,18.1,31870,19.1,34089
+Bell Pepper,Netherlands,29,23.9,25.1,49993,26.6,54105
+Bell Pepper,Sri Lanka,61,32.5,25.8,52895,27.3,56994
+Orchid,Thailand,27,34.2,26.1,21008,27.1,24773
+Orchid,Sri Lanka,78,30.2,25.4,20439,26.4,23552
+Vanilla,Sri Lanka,6,32.3,27.5,15863,28.0,18713
+Vanilla,Sri Lanka,43,32.0,28.7,19250,29.2,21382
+Vanilla,Sri Lanka,91,30.5,27.0,17207,27.5,19899
+Strawberry,Japan,15,25.0,21.9,34409,22.9,39894
+Strawberry,Japan,47,24.6,20.0,45723,21.0,47873
+Strawberry,Sri Lanka,35,30.2,20.6,40035,21.6,41086
+Saffron,Iran,23,23.1,18.8,29121,19.8,35170
+Saffron,Sri Lanka,41,26.9,18.1,31684,19.1,35927
+Bell Pepper,Netherlands,26,22.8,25.1,49287,26.6,54306
+Bell Pepper,Sri Lanka,56,30.6,25.8,52746,27.3,55661
+Orchid,Thailand,29,34.5,26.1,21872,27.1,25082
+Orchid,Sri Lanka,72,30.2,25.4,19754,26.4,23034
+Vanilla,Sri Lanka,10,29.6,27.6,14352,28.1,17902
+Vanilla,Sri Lanka,40,33.6,28.7,19158,29.2,22977
+Vanilla,Sri Lanka,92,29.8,27.0,17515,27.5,19731
+Strawberry,Japan,13,24.0,21.9,35585,22.9,40712
+Strawberry,Japan,47,26.2,20.0,44419,21.0,48273
+Strawberry,Sri Lanka,29,29.2,20.7,40763,21.7,41577
+Saffron,Iran,16,22.9,18.8,29294,19.8,35961
+Saffron,Sri Lanka,37,27.3,18.1,32269,19.1,34636
+Bell Pepper,Netherlands,22,23.4,25.1,50575,26.6,54020
+Bell Pepper,Sri Lanka,55,30.9,25.8,52543,27.3,55099
+Orchid,Thailand,31,33.4,26.2,21525,27.2,24333
+Orchid,Sri Lanka,71,30.5,25.4,19836,26.4,24957
+Vanilla,Sri Lanka,13,30.2,27.6,15851,28.1,17380
+Vanilla,Sri Lanka,47,32.7,28.7,20107,29.2,21129
+Vanilla,Sri Lanka,91,29.0,27.0,17890,27.5,20880
+Strawberry,Japan,18,23.7,21.8,35186,22.8,40252
+Strawberry,Japan,49,25.5,20.0,45447,21.0,47459
+Strawberry,Sri Lanka,32,29.2,20.7,39918,21.7,42326
+Saffron,Iran,25,23.2,18.8,29629,19.8,34269
+Saffron,Sri Lanka,44,26.8,18.1,31843,19.1,34861
+Bell Pepper,Netherlands,28,22.8,25.1,50299,26.6,55799
+Bell Pepper,Sri Lanka,65,33.3,25.8,51312,27.3,55575
+Orchid,Thailand,30,32.0,26.1,22144,27.1,25130
+Orchid,Sri Lanka,74,31.1,25.4,20227,26.4,23164
+Vanilla,Sri Lanka,5,32.0,27.5,15579,28.0,18847
+Vanilla,Sri Lanka,45,31.6,28.7,19956,29.2,22939
+Vanilla,Sri Lanka,86,31.5,26.9,17968,27.4,19510
+Strawberry,Japan,14,25.3,21.9,34796,22.9,40024
+Strawberry,Japan,51,25.2,20.0,44484,21.0,48780
+Strawberry,Sri Lanka,35,28.9,20.6,40008,21.6,41690
+Saffron,Iran,24,21.7,18.8,29241,19.8,35239
+Saffron,Sri Lanka,45,25.5,18.1,31216,19.1,35329
+Bell Pepper,Netherlands,28,23.2,25.1,50207,26.6,54494
+Bell Pepper,Sri Lanka,65,32.0,25.8,52451,27.3,56317
+Orchid,Thailand,28,31.9,26.1,22661,27.1,25836
+Orchid,Sri Lanka,73,32.1,25.4,19745,26.4,23891
+Vanilla,Sri Lanka,11,30.0,27.6,15364,28.1,17128
+Vanilla,Sri Lanka,46,33.0,28.7,20375,29.2,22381
+Vanilla,Sri Lanka,89,31.4,26.9,18198,27.4,20825
+Strawberry,Japan,10,25.0,21.9,35241,22.9,39426
+Strawberry,Japan,54,24.6,20.0,45168,21.0,48561
+Strawberry,Sri Lanka,32,30.6,20.7,40904,21.7,41587
+Saffron,Iran,25,23.3,18.8,29813,19.8,35987
+Saffron,Sri Lanka,35,27.3,18.1,32310,19.1,35999
+Bell Pepper,Netherlands,24,23.5,25.1,49360,26.6,55625
+Bell Pepper,Sri Lanka,56,33.5,25.8,52989,27.3,55574
+Orchid,Thailand,33,34.1,26.2,22112,27.2,24687
+Orchid,Sri Lanka,78,30.3,25.4,20182,26.4,23488
+Vanilla,Sri Lanka,15,32.1,27.6,15404,28.1,18125
+Vanilla,Sri Lanka,43,33.0,28.7,20477,29.2,22505
+Vanilla,Sri Lanka,86,31.1,26.9,18302,27.4,19850
+Strawberry,Japan,20,23.6,21.8,34821,22.8,39454
+Strawberry,Japan,53,25.5,20.0,45088,21.0,48099
+Strawberry,Sri Lanka,34,29.2,20.7,39916,21.7,42938
+Saffron,Iran,23,22.3,18.8,29735,19.8,35520
+Saffron,Sri Lanka,37,26.2,18.1,32290,19.1,34866
+Bell Pepper,Netherlands,27,23.5,25.1,49841,26.6,54961
+Bell Pepper,Sri Lanka,63,31.6,25.8,52817,27.3,55327
+Orchid,Thailand,26,32.9,26.1,21628,27.1,25244
+Orchid,Sri Lanka,79,30.3,25.4,20156,26.4,23303
